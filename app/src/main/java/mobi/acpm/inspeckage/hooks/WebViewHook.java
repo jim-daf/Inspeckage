@@ -10,6 +10,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
+import android.annotation.SuppressLint;
 
 /**
  * Created by acpm on 24/11/15.
@@ -23,12 +24,15 @@ public class WebViewHook extends XC_MethodHook {
     public static void initAllHooks(final XC_LoadPackage.LoadPackageParam loadPackageParam) {
 
         //Injects the supplied Java object into this WebView.
+        @SuppressLint("AddJavascriptInterface")
         //http://developer.android.com/intl/pt-br/reference/android/webkit/WebView.html#addJavascriptInterface(java.lang.Object, java.lang.String)
+        @SuppressLint("AddJavascriptInterface")
         findAndHookMethod(WebView.class, "addJavascriptInterface",
                 Object.class, String.class, new XC_MethodHook() {
 
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                         String objName = (String) param.args[1];
+                        @SuppressLint("AddJavascriptInterface")
                         XposedBridge.log(TAG + "addJavascriptInterface(Object, " + objName + ");");
                     }
                 });

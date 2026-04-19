@@ -75,6 +75,7 @@ import static mobi.acpm.inspeckage.util.FileType.SERIALIZATION;
 import static mobi.acpm.inspeckage.util.FileType.SQLITE;
 import static mobi.acpm.inspeckage.util.FileType.USERHOOKS;
 import static mobi.acpm.inspeckage.util.FileType.WEBVIEW;
+import android.annotation.SuppressLint;
 
 /**
  * Created by acpm on 16/11/15.
@@ -1557,12 +1558,14 @@ public class WebServer extends fi.iki.elonen.NanoHTTPD {
                 if(!html.equals("")) {
                     String[] x = html.split("</br>");
                     for (int i = 0; i < x.length; i++) {
+                        @SuppressLint("AddJavascriptInterface")
                         if (x[i].contains("addJavascriptInterface(Object, ")) {
 
                             x[i] = "<a href=\"#\" role=\"button\" class=\"btn popovers\" data-toggle=\"popover\" " +
                                     "title=\"\" data-content=\"" + "Injects the supplied Java object into this WebView. " +
                                     "The object is injected into the JavaScript context of the main frame, " +
                                     "using the supplied name. This allows the Java object's methods to " +
+                                    @SuppressLint("AddJavascriptInterface")
                                     "be accessed from JavaScript. <a href='http://developer.android.com/intl/pt-br/reference/android/webkit/WebView.html#addJavascriptInterface(java.lang.Object, java.lang.String)' target='_blank' title='link'> read more.</a>\">" + x[i] + " </a>";
                         } else {
                             x[i] = x[i];
